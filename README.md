@@ -1,4 +1,4 @@
 YIOverlayWindow
 ===============
 
-General-purpose UIWindow overlay for iOS5+.
+A simple, general-purpose UIWindow overlay for iOS5+.
