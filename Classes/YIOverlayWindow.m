@@ -39,8 +39,10 @@
 {
     [self presentOverlayViewController:nil animated:animated completion:completion];
     
-    view.frame = self.rootViewController.view.bounds;
-    view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    // comment-out: don't resize automatically for partial overlay
+//    view.frame = self.rootViewController.view.bounds;
+//    view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    
     [self.rootViewController.view addSubview:view];
 }
 
@@ -81,6 +83,24 @@
             completion(finished);
         }
     }];
+}
+
+#pragma mark -
+
+#pragma mark UIViewGeometry
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    for (UIView* subview in self.rootViewController.view.subviews) {
+        CGPoint convertedPoint = [self convertPoint:point toView:subview];
+        
+        if ([subview pointInside:convertedPoint withEvent:event]) {
+            return YES;
+        }
+    }
+    
+    // don't detect non-presenting view touches & forward to next window
+    return NO;
 }
 
 @end
