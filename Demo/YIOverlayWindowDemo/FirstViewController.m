@@ -10,6 +10,7 @@
 #import "YIOverlayWindow.h"
 #import "TutorialViewController.h"
 
+
 @interface FirstViewController ()
 
 @end
@@ -37,13 +38,23 @@
     TutorialViewController* tutorialVC = [[TutorialViewController alloc] initWithNibName:@"TutorialViewController" bundle:nil];
     [YIOverlayWindow presentOverlayViewController:tutorialVC animated:YES completion:NULL];
     
-#else
+#elif 0
     // view example
     
     UINib* nib = [UINib nibWithNibName:@"TutorialView" bundle:nil];
     UIView* overlayView = [[nib instantiateWithOwner:self options:nil] objectAtIndex:0];
     
     [YIOverlayWindow presentOverlayView:overlayView animated:YES completion:NULL];
+    
+#else
+    // partial view example
+    
+    UILabel* overlayLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 50, 200, 50)];
+    overlayLabel.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
+    overlayLabel.text = @"Tap here to dismiss";
+    overlayLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [YIOverlayWindow presentOverlayView:overlayLabel animated:YES completion:NULL];
     
 #endif
 }
